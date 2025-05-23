@@ -20,15 +20,12 @@ parser.add_argument(
 )
 parser.add_argument("-template", "--template", type=int, default=1)
  
-# parser.add_argument("-wo_vlm", "--wo_vlm", type=int, default=0)
-
 parser.add_argument("-wo_defence", "--wo_defence", type=int, default=0)
 
 parser.add_argument("-test_over_rej", "--test_over_rej", type=int, default=0)
 
 parser.add_argument("-over_rej_dataset", "--over_rej_dataset", type=str, default='xstest')
 
-# parser.add_argument('-defences', "--defences", type=str, default='vlm', choices=['vlm', 'smoothllm', 'guard_model'])
 parser.add_argument('-defences', "--defences", type=str, default='vlm')
 
 parser.add_argument("-smooth_var", "--smooth_var", type=int, default=1, choices=[1, 2, 3])
@@ -130,10 +127,6 @@ final_preds = [0 if sum(dim) < 1 else 1 for dim in all_preds]
 print(final_preds)
 print(f'{len(final_preds)-sum(final_preds)} prompts passed the filter.')
 
-# print(preds)
-
-# print(f'********************')
-
 filtered_prompts = []
 for idx, (gate_out, origin_prompt) in enumerate(zip(final_preds, origin_prompts)):
     if gate_out == 0:
@@ -160,18 +153,12 @@ sampling_params = SamplingParams(
     max_tokens=512,
 )
 
-# if args.template:
 if 'vicuna' not in model_name:
     filtered_instruct_prompts = process_prompts_instruct(tokenizer, filtered_prompts, need_reminder=need_self_remind_flag)
 else:
-    # filtered_instruct_prompts = filtered_prompts
     filtered_instruct_prompts = [
         f"System: {self_reminder}\n\nUser: {prompt}\n\nAssistant:" for prompt in filtered_prompts
     ]
-
-# for x in filtered_instruct_prompts:
-#     print(x)
-# exit()
 
 if not args.test_over_rej == 1:
     filtered_outputs = llm.generate(filtered_instruct_prompts, sampling_params)
@@ -180,16 +167,11 @@ if not args.test_over_rej == 1:
     for o in filtered_outputs:
         generated_text = o.outputs[0].text
         filtered_out_content.append(generated_text)
-        # print(generated_text)
 
     # clean gpumem
     del llm
     gc.collect()
     torch.cuda.empty_cache()
-
-    # print(filtered_prompts[0])
-    # print(filtered_out_content[0])
-    # print(f'**************************************************')
 
 if args.test_over_rej == 1:
 
@@ -262,5 +244,3 @@ else:
     if 'guard_model' in defences:
         print(f'Guard Model:{args.guard_model}')
     print(f'****************************************************************************************************')
-
-
