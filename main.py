@@ -38,6 +38,8 @@ parser.add_argument("-vlm_text", "--vlm_text", type=str, default='microsoft/Phi-
 
 parser.add_argument("-dataset", "--dataset", type=str, default='jailbreakbench')
 
+parser.add_argument("-temperature", "--temperature", type=float)
+
 args = parser.parse_args()
  
 attack_method = args.method
@@ -148,7 +150,7 @@ llm = LLM(
 )
 
 sampling_params = SamplingParams(
-    temperature=0.8,
+    temperature=args.temperature,
     top_p=0.95,
     max_tokens=512,
 )
