@@ -1,0 +1,7 @@
+vllm==0.6.3
+transformers
+scikit-learn
+qwen_vl_utils
+matplotlib
+torch
+jailbreakbench
