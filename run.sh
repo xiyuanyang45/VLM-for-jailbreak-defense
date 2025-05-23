@@ -893,9 +893,3 @@
 # python test_vis_asr.py -model_been_attack llama3.2-vis -dataset_path jbb_result.json
 
 
-
-CUDA_VISIBLE_DEVICES=0 TOKENIZERS_PARALLELISM=false python vlm_as_def.py -method ada -model_been_attack llama-2-7b-chat-hf -defences vlm -dataset data/ada_attack/jbb_llama2_adan.json >> log/ada.txt
-
-CUDA_VISIBLE_DEVICES=1 TOKENIZERS_PARALLELISM=false python vlm_as_def.py -method ada -model_been_attack mistral-7b -defences vlm -dataset data/ada_attack/jbb_mistral_adan.json >> log/ada.txt
-
-CUDA_VISIBLE_DEVICES=1 TOKENIZERS_PARALLELISM=false python vlm_as_def.py -method ada -model_been_attack vicuna-13b-v1.5 -defences vlm -dataset data/ada_attack/jbb_vicuna_adan.json >> log/ada.txt
