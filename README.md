@@ -136,18 +136,6 @@ python main.py \
     --dataset jailbreakbench
 ```
 
-### 4\. Testing Over-Rejection
-
-To test the over-rejection rate of VLM4JD on the `xstest` dataset (assuming `xstest` contains benign prompts):
-
-```bash
-python main.py \
-    --test_over_rej 1 \
-    --over_rej_dataset xstest \
-    --defences vlm \
-    --vlm microsoft/Phi-3.5-vision-instruct
-```
-
 ### Key Arguments:
 
   * `--method`: Adversarial attack method (e.g., `GCG`).
